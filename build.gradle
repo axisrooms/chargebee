@@ -51,7 +51,7 @@ apply plugin: 'eclipse'
 apply plugin: 'idea'
 
 bootRepackage {
-    mainClass = 'com.axisrooms.chbApplication'
+    mainClass = 'com.axisrooms.ChargebeeApplication'
 }
 repositories {
     mavenCentral()
