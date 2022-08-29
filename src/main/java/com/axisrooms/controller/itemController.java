@@ -24,7 +24,7 @@ public class itemController {
 
     @Autowired
     private com.axisrooms.manager.itemManager itemManager;
-
+    @CrossOrigin
     @GetMapping(
             path = "/getItemFamily",
             produces = MediaType.APPLICATION_JSON_VALUE
