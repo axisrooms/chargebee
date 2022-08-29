@@ -19,12 +19,12 @@ public class subscriptionManagerImpl implements subscriptionManager{
         public Response createSubscription(SubscriptionModel subscriptionRequest)  {
         try {
             Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
-            Result result = Subscription.createWithItems("__test__8asz8Ru9WhHOJO")
-                    .subscriptionItemItemPriceId(0,"basic-USD")
+            Result result = Subscription.createWithItems("16BY4sTBT88Y5sKI")
+                    .subscriptionItemItemPriceId(0,"CM-P41-INR-Monthly")
                     .subscriptionItemBillingCycles(0,2)
                     .subscriptionItemQuantity(0,1)
-                    .subscriptionItemItemPriceId(1,"day-pass-USD")
-                    .subscriptionItemUnitPrice(1,100)
+//                    .subscriptionItemItemPriceId(1,"day-pass-USD")
+//                    .subscriptionItemUnitPrice(1,100)
                     .request();
             Subscription subscription = result.subscription();
            // Customer customer = result.customer();
@@ -44,7 +44,7 @@ public class subscriptionManagerImpl implements subscriptionManager{
     public Subscription getSubscription(String subscriptionId) {
         try {
             Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
-            Result result = Subscription.retrieve("__test__8asukSOXe0W3SU").request();
+            Result result = Subscription.retrieve(subscriptionId).request();
             Subscription subscription = result.subscription();
           //  Customer customer = result.customer();
             Card card = result.card();

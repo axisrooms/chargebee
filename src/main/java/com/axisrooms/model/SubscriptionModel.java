@@ -2,28 +2,31 @@ package com.axisrooms.model;
 
 import lombok.Data;
 
+import java.util.ArrayList;
+
 @Data
 public class SubscriptionModel {
-    private boolean allow_direct_debit;
-    private String auto_collection;
-    public Billing_address billingaddress;
-    private String card_status;
-    private float created_at;
-    private boolean deleted;
-    private String email;
-    private float excess_payments;
-    private String first_name;
-    private String id;
-    private String last_name;
-    private String locale;
-    private float net_term_days;
-    private String object;
-    private String pii_cleared;
-    private String preferred_currency_code;
-    private float promotional_credits;
-    private float refundable_credits;
-    private float resource_version;
-    private String taxability;
-    private float unbilled_charges;
-    private float updated_at;
+    public int activated_at;
+    public int billing_period;
+    public String billing_period_unit;
+    public int created_at;
+    public String currency_code;
+    public int current_term_end;
+    public int current_term_start;
+    public String customer_id;
+    public boolean deleted;
+    public int due_invoices_count;
+    public int due_since;
+    public boolean has_scheduled_changes;
+    public String id;
+    public int mrr;
+    public int next_billing_at;
+    public String object;
+    public int remaining_billing_cycles;
+    public long resource_version;
+    public int started_at;
+    public String status;
+    public ArrayList<SubscriptionItem> subscription_items;
+    public int total_dues;
+    public int updated_at;
 }

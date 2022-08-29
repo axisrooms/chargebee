@@ -11,14 +11,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.SocketTimeoutException;
-
+@RestController
+@RequestMapping(value = "/v1/chargebee")
 @Slf4j
 public class subscriptionController {
 
@@ -54,7 +52,7 @@ public class subscriptionController {
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     public ResponseEntity<?> createSubscription(@Valid @RequestBody SubscriptionModel subscriptionRequest) {
-        log.info("inside update inventory api of easemytrip ota Request Received is ====>"+subscriptionRequest);
+        log.info("inside createSubscription Request Received is ====>"+subscriptionRequest);
         ResponseEntity<?> responseEntity;
         try {
             Response response = subscriptionManager.createSubscription(subscriptionRequest);

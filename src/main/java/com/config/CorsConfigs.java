@@ -53,9 +53,7 @@ public class CorsConfigs implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("http://localhost:44701",
-                         "https://app.axisrooms.com",
-                        "http://sandbox.axisrooms.com","http://preprod1.axisrooms.com","*.axisrooms.com")
+                .allowedOrigins("*")
                 .allowedHeaders("*.axisrooms.com")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "HEAD", "OPTIONS")
                 .allowCredentials(true);

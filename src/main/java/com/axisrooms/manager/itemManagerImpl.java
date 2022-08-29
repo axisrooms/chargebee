@@ -1,11 +1,15 @@
 package com.axisrooms.manager;
 
+import com.axisrooms.model.ItemPriceModel;
 import com.axisrooms.model.Response;
 import com.axisrooms.model.ItemModel;
 import com.chargebee.Environment;
 import com.chargebee.ListResult;
+import com.chargebee.Result;
 import com.chargebee.models.Item;
 import com.chargebee.models.ItemFamily;
+import com.chargebee.models.ItemPrice;
+import com.chargebee.models.enums.PricingModel;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Header;
 import org.apache.http.message.BasicHeader;
@@ -85,5 +89,26 @@ public class itemManagerImpl implements itemManager {
             e.printStackTrace();
         }
         return itemList;
+    }
+
+    @Override
+    public Response createItemPrice(ItemPriceModel subscriptionRequest) {
+        try {
+            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            Result result = ItemPrice.create()
+                    .id("silver-USD-monthly")
+                    .itemId("silver")
+                    .name("silver USD monthly")
+                    .pricingModel(PricingModel.PER_UNIT)
+                    .price(1000)
+                    .externalName("silver USD")
+                    .periodUnit(ItemPrice.PeriodUnit.MONTH)
+                    .period(1)
+                    .request();
+            ItemPrice itemPrice = result.itemPrice();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

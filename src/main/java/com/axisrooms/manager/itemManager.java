@@ -1,8 +1,8 @@
 package com.axisrooms.manager;
 
+import com.axisrooms.model.ItemPriceModel;
 import com.axisrooms.model.Response;
 import com.axisrooms.model.ItemModel;
-import com.chargebee.models.ItemFamily;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,4 +14,6 @@ public interface itemManager {
     public List<?> listItemFamily();
 
     public List<?> listItems();
+
+    Response createItemPrice(ItemPriceModel subscriptionRequest);
 }
