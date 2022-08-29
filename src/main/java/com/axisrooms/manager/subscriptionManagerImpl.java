@@ -6,6 +6,7 @@ import com.axisrooms.model.SubscriptionModel;
 import com.chargebee.Environment;
 import com.chargebee.Result;
 import com.chargebee.models.*;
+import com.chargebee.models.enums.AutoCollection;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class subscriptionManagerImpl implements subscriptionManager{
                     .subscriptionItemItemPriceId(0,"CM-P41-INR-Monthly")
                     .subscriptionItemBillingCycles(0,2)
                     .subscriptionItemQuantity(0,1)
+                    .autoCollection(AutoCollection.OFF)
 //                    .subscriptionItemItemPriceId(1,"day-pass-USD")
 //                    .subscriptionItemUnitPrice(1,100)
                     .request();
