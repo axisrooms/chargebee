@@ -3,6 +3,7 @@ package com.axisrooms.model;
 import lombok.Data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Data
 public class SubscriptionModel {
@@ -26,7 +27,7 @@ public class SubscriptionModel {
     public long resource_version;
     public int started_at;
     public String status;
-    public ArrayList<SubscriptionItem> subscription_items;
+    public List<SubscriptionItem> subscription_items;
     public int total_dues;
     public int updated_at;
 }

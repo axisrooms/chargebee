@@ -13,7 +13,7 @@ public interface itemManager {
 
     public List<?> listItemFamily();
 
-    public List<?> listItems();
+    public List<?> listItems(String itemFamily);
 
     Response createItemPrice(ItemPriceModel subscriptionRequest);
 }

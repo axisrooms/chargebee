@@ -2,12 +2,14 @@ package com.axisrooms.manager;
 
 //import com.axisrooms.model.CustomerModel;
 import com.axisrooms.model.Response;
+import com.axisrooms.model.SubscriptionItem;
 import com.axisrooms.model.SubscriptionModel;
 import com.chargebee.Environment;
 import com.chargebee.Result;
 import com.chargebee.models.*;
 import com.chargebee.models.enums.AutoCollection;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,12 +18,21 @@ import java.util.List;
 @Slf4j
 public class subscriptionManagerImpl implements subscriptionManager{
 
+    @Value("${microservice.communication.token}")
+    private String acceptedToken;
+
+    @Value("${siteName}")
+    private String siteName;
+
         @Override
         public Response createSubscription(SubscriptionModel subscriptionRequest)  {
         try {
-            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
-            Result result = Subscription.createWithItems("16BY4sTBT88Y5sKI")
-                    .subscriptionItemItemPriceId(0,"CM-P41-INR-Monthly")
+            Environment.configure(siteName,acceptedToken);
+            List<SubscriptionItem> subList = subscriptionRequest.getSubscription_items();
+            SubscriptionItem subItem = subList.get(0);
+            //SubscriptionItem subItem= subs.subscriptionItems().get(0);
+            Result result = Subscription.createWithItems(subscriptionRequest.customer_id)
+                    .subscriptionItemItemPriceId(0,subItem.item_price_id)//"CM-P41-INR-Monthly"
                     .subscriptionItemBillingCycles(0,2)
                     .subscriptionItemQuantity(0,1)
                     .autoCollection(AutoCollection.OFF)

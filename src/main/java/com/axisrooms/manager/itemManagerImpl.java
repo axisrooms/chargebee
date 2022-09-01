@@ -11,15 +11,10 @@ import com.chargebee.models.ItemFamily;
 import com.chargebee.models.ItemPrice;
 import com.chargebee.models.enums.PricingModel;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.Header;
-import org.apache.http.message.BasicHeader;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.*;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -53,7 +48,7 @@ public class itemManagerImpl implements itemManager {
     }
 
     @Override
-    public List<?> listItems() {
+    public List<?> listItems(String itemFamily) {
         List<String> planList = new ArrayList<>();
 //        try {
 //            RestTemplate restTemplate = new RestTemplate();
@@ -79,11 +74,13 @@ public class itemManagerImpl implements itemManager {
         try {
             Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
             ListResult result = Item.list()
-                    .limit(150)
+                    .limit(99)
                     .request();
             for(ListResult.Entry entry:result) {
                 Item item = entry.item();
-                itemList.add(item.name());
+                if(item.itemFamilyId().equals(itemFamily)) {
+                    itemList.add(item.name());
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();

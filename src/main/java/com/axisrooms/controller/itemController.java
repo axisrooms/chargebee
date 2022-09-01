@@ -48,19 +48,18 @@ public class itemController {
     }
 
     @GetMapping(
-            path = "/getItems",
+            path = "/getItems/{itemFamilyId}",
             produces = MediaType.APPLICATION_JSON_VALUE
     )
     @ApiOperation(
             value = "Fetch plans from chargebee.",
             response = Response.class
     )
-    public List<?> getItems() {
+    public List<?> getItems(@PathVariable("itemFamilyId")String itemFamily) {
         ResponseEntity<?> responseEntity;
         List<?> response = null;
         try {
-            // Utils.isValid(token, hotelId, acceptedToken);
-            response = itemManager.listItems();
+            response = itemManager.listItems(itemFamily);
             responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Throwable throwable) {
             log.error("Encountered exception while create customer", throwable);
