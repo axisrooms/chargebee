@@ -18,6 +18,7 @@ import javax.validation.Valid;
 import java.net.SocketTimeoutException;
 
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/v1/chargebee")
 @Api(description = "Api to communicate with chargebee Microservice from Channel Manager")
 @Slf4j

@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.net.SocketTimeoutException;
 @RestController
+@CrossOrigin
 @RequestMapping(value = "/v1/chargebee")
 @Slf4j
 public class subscriptionController {
