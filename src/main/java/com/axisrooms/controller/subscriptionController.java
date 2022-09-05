@@ -57,7 +57,7 @@ public class subscriptionController {
         ResponseEntity<?> responseEntity;
         try {
             Response response = subscriptionManager.createSubscription(subscriptionRequest);
-            responseEntity = new ResponseEntity<>(subscriptionRequest, HttpStatus.OK);
+            responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Throwable throwable) {
             log.error("Encountered exception while create subscription", throwable);
             responseEntity = new ResponseEntity<>(subscriptionRequest, HttpStatus.SERVICE_UNAVAILABLE);

@@ -26,6 +26,7 @@ public class subscriptionManagerImpl implements subscriptionManager{
 
         @Override
         public Response createSubscription(SubscriptionModel subscriptionRequest)  {
+            Response response = new Response();
         try {
             Environment.configure(siteName,acceptedToken);
             List<SubscriptionItem> subList = subscriptionRequest.getSubscription_items();
@@ -44,14 +45,21 @@ public class subscriptionManagerImpl implements subscriptionManager{
             Card card = result.card();
             Invoice invoice = result.invoice();
             List<UnbilledCharge> unbilledCharges = result.unbilledCharges();
-            Response response = new Response();
-            response.setMessage("");
-            return response;
+
+            if(subscription.toString().contains("error")) {
+                response.setMessage("Error");
+            }
+            else{
+                response.setMessage("Subscription created successfully - " + subscription.id());
+            }
+          //  return response;
         } catch (Exception e) {
+            response.setMessage(e.getMessage().toString());
             e.printStackTrace();
+            return response;
         }
-        return null;
-    }
+            return response;
+        }
 
     @Override
     public Subscription getSubscription(String subscriptionId) {
