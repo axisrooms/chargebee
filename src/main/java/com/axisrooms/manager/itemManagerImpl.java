@@ -89,6 +89,29 @@ public class itemManagerImpl implements itemManager {
     }
 
     @Override
+    public List<?> listItemPrices(String itemPlan) {
+        List<String> planList = new ArrayList<>();
+        List<String> itemList = new ArrayList<>();
+        try {
+            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            ListResult result = ItemPrice.list()
+                    .limit(100)
+                    .request();
+            for(ListResult.Entry entry:result) {
+                ItemPrice itemPrice = entry.itemPrice();
+                log.info("Itemprice: "+itemPrice.externalName());
+                if(itemPrice.externalName().equals(itemPlan)) {
+                    itemList.add(itemPrice.name());
+
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return itemList;
+    }
+
+    @Override
     public Response createItemPrice(ItemPriceModel subscriptionRequest) {
         try {
             Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");

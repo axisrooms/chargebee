@@ -68,6 +68,27 @@ public class itemController {
         return response;
     }
 
+    @GetMapping(
+            path = "/getItemPrices/{itemPlanId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    @ApiOperation(
+            value = "Fetch plans from chargebee.",
+            response = Response.class
+    )
+    public List<?> getItemPrices(@PathVariable("itemPlanId")String itemPlan) {
+        ResponseEntity<?> responseEntity;
+        List<?> response = null;
+        try {
+            response = itemManager.listItemPrices(itemPlan);
+            responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Throwable throwable) {
+            log.error("Encountered exception while getting item prices", throwable);
+            responseEntity = new ResponseEntity<>(new Response(), HttpStatus.SERVICE_UNAVAILABLE);
+        }
+        return response;
+    }
+
     @PostMapping(
             path = "/createItemPrice",
             consumes = MediaType.APPLICATION_JSON_VALUE,

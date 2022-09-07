@@ -15,5 +15,7 @@ public interface itemManager {
 
     public List<?> listItems(String itemFamily);
 
+    public List<?> listItemPrices(String itemPlan);
+
     Response createItemPrice(ItemPriceModel subscriptionRequest);
 }
