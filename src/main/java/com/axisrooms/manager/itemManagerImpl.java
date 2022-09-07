@@ -39,7 +39,7 @@ public class itemManagerImpl implements itemManager {
                     .request();
             for(ListResult.Entry entry:result) {
                 ItemFamily itemFamily = entry.itemFamily();
-                itemList.add(itemFamily.name());
+                itemList.add(itemFamily.id());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -50,37 +50,20 @@ public class itemManagerImpl implements itemManager {
     @Override
     public List<?> listItems(String itemFamily) {
         List<String> planList = new ArrayList<>();
-//        try {
-//            RestTemplate restTemplate = new RestTemplate();
-//            HttpHeaders httpHeaders = new HttpHeaders();
-//           // httpHeaders.setContentType(MediaType.APPLICATION_JSON);
-//         //   httpHeaders.set("Authorization", "Bearer "+"test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
-//            String credentials = "test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k";
-//            String encodedAuthorization = Base64.getEncoder().encodeToString(credentials.getBytes());
-//
-//            Header header = new BasicHeader(HttpHeaders.AUTHORIZATION, "Basic " + encodedAuthorization);
-//            httpHeaders.add(header);
-//            HttpEntity entity = new HttpEntity<>(null, header);
-//            ResponseEntity<String> responseEntity = restTemplate.exchange(getItemsUrl, HttpMethod.GET,entity,String.class);
-//            log.info(responseEntity.getBody());
-//            //            for(ListResult.Entry entry:result) {
-////                ItemFamily itemFamily = entry.itemFamily();
-////                planList.add(itemFamily.name());
-////            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         List<String> itemList = new ArrayList<>();
+        //ItemFamily itemFam = new ItemFamily(itemFamily);
+
         try {
             Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
             ListResult result = Item.list()
+                    .itemFamilyId().is(itemFamily)
                     .limit(99)
                     .request();
             for(ListResult.Entry entry:result) {
                 Item item = entry.item();
-                if(item.itemFamilyId().equals(itemFamily)) {
-                    itemList.add(item.name());
-                }
+               // if(item.itemFamilyId().equals(itemFamily)) {
+                    itemList.add(item.id());
+               // }
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -96,16 +79,16 @@ public class itemManagerImpl implements itemManager {
            // String itemPLanId = itemPlan.replace(' ','-');
             Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
             ListResult result = ItemPrice.list()
-                    //.itemId().is(itemPLanId)
+                    .itemId().is(itemPlan)
                     .limit(100)
                     .request();
             for(ListResult.Entry entry:result) {
                 ItemPrice itemPrice = entry.itemPrice();
                 log.info("Itemprice: "+itemPrice.externalName());
-                if(itemPrice.externalName().equals(itemPlan)) {
+               // if(itemPrice.externalName().equals(itemPlan)) {
                     itemList.add(itemPrice.id());
 
-                }
+               // }
             }
         } catch (Exception e) {
             e.printStackTrace();
