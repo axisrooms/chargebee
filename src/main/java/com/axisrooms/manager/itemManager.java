@@ -18,4 +18,6 @@ public interface itemManager {
     public List<?> listItemPrices(String itemPlan);
 
     Response createItemPrice(ItemPriceModel subscriptionRequest);
+
+     Integer fetchPrice(String itemPlanId);
 }
