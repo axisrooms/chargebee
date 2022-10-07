@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.SocketTimeoutException;
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/v1/chargebee")
@@ -39,7 +41,7 @@ public class subscriptionController {
         ResponseEntity<?> responseEntity;
         try {
            // Utils.isValid(token, hotelId, acceptedToken);
-            Subscription response = subscriptionManager.getSubscription(subscriptionId);
+            List<Subscription> response = subscriptionManager.getSubscription(subscriptionId);
             responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
         } catch (Throwable throwable) {
             log.error("Encountered exception while create subscription", throwable);
@@ -61,6 +63,36 @@ public class subscriptionController {
         } catch (Throwable throwable) {
             log.error("Encountered exception while create subscription", throwable);
             responseEntity = new ResponseEntity<>(subscriptionRequest, HttpStatus.SERVICE_UNAVAILABLE);
+        }
+        return responseEntity;
+    }
+    @GetMapping(
+            path = "/listSubscriptions/{customerId}"
+    )
+    public ResponseEntity<?> listSubscriptions(@PathVariable("customerId") String customerId) {
+        ResponseEntity<?> responseEntity;
+        try {
+            List<Subscription> response = subscriptionManager.listSubscriptions(customerId);
+            responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Throwable throwable) {
+            log.error("Encountered exception while listing subscription", throwable);
+            responseEntity = new ResponseEntity<>(new Response(), HttpStatus.SERVICE_UNAVAILABLE);
+        }
+        return responseEntity;
+    }
+
+    @GetMapping(
+            path = "/getSubscriptions/{subscriptionId}",
+            produces = MediaType.APPLICATION_JSON_VALUE
+    )
+    public ResponseEntity<?> getSubscriptionDetails(@PathVariable("subscriptionId") String subscriptionId) {
+        ResponseEntity<?> responseEntity;
+        try {
+            List<Subscription>  response = subscriptionManager.getSubscription(subscriptionId);
+            responseEntity = new ResponseEntity<>(response, HttpStatus.OK);
+        } catch (Throwable throwable) {
+            log.error("Encountered exception while fetching subscription", throwable);
+            responseEntity = new ResponseEntity<>(new Response(), HttpStatus.SERVICE_UNAVAILABLE);
         }
         return responseEntity;
     }

@@ -5,6 +5,7 @@ import com.axisrooms.model.Response;
 import com.axisrooms.model.SubscriptionItem;
 import com.axisrooms.model.SubscriptionModel;
 import com.chargebee.Environment;
+import com.chargebee.ListResult;
 import com.chargebee.Result;
 import com.chargebee.models.*;
 import com.chargebee.models.enums.AutoCollection;
@@ -12,6 +13,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -34,8 +36,8 @@ public class subscriptionManagerImpl implements subscriptionManager{
             //SubscriptionItem subItem= subs.subscriptionItems().get(0);
             Result result = Subscription.createWithItems(subscriptionRequest.customer_id)
                     .subscriptionItemItemPriceId(0,subItem.item_price_id)//"CM-P41-INR-Monthly"
-                    .subscriptionItemBillingCycles(0,2)
-                    .subscriptionItemQuantity(0,1)
+                    .subscriptionItemBillingCycles(0,subItem.billing_cycles)
+                    .subscriptionItemQuantity(0,subItem.quantity)
                     .autoCollection(AutoCollection.OFF)
 //                    .subscriptionItemItemPriceId(1,"day-pass-USD")
 //                    .subscriptionItemUnitPrice(1,100)
@@ -62,19 +64,44 @@ public class subscriptionManagerImpl implements subscriptionManager{
         }
 
     @Override
-    public Subscription getSubscription(String subscriptionId) {
+    public List<Subscription> getSubscription(String subscriptionId) {
+        List subscriptionList = new ArrayList();
         try {
-            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            Environment.configure(siteName,acceptedToken);
             Result result = Subscription.retrieve(subscriptionId).request();
             Subscription subscription = result.subscription();
-          //  Customer customer = result.customer();
-            Card card = result.card();
-            Response response = new Response();
-            response.setMessage("");
-            return subscription;
+            SubscriptionModel sub = new SubscriptionModel();
+            sub.setId(subscription.id());
+            //sub.setActivated_at(subscription.activatedAt());
+            sub.setDue_invoices_count(subscription.dueInvoicesCount());
+           // sub.setDue_since(subscription.dueSince());
+            sub.setTotal_dues(subscription.totalDues());
+                    subscriptionList.add(sub);
+            return subscriptionList;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
+    }
+
+    @Override
+    public List<Subscription> listSubscriptions(String customerId) throws Exception {
+            List subscriptionList = new ArrayList();
+        try {
+            Environment.configure(siteName,acceptedToken);
+            ListResult result = Subscription.list()
+                    .customerId().is(customerId)
+                    .limit(99)
+                    .request();
+            for(ListResult.Entry entry:result) {
+                Subscription subscription = entry.subscription();
+                log.info("Subsc: "+subscription.id());
+                subscriptionList.add(subscription.id());
+
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return subscriptionList;
     }
 }
