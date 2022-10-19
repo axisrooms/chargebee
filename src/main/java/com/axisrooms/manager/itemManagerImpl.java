@@ -41,7 +41,7 @@ public class itemManagerImpl implements itemManager {
         try {
             Environment.configure(siteName,acceptedToken);
             ListResult result = ItemFamily.list()
-                    .limit(5)
+                    .limit(99)
                     .request();
             for(ListResult.Entry entry:result) {
                 ItemFamily itemFamily = entry.itemFamily();
