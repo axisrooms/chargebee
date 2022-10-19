@@ -114,6 +114,10 @@ public class itemManagerImpl implements itemManager {
               //  ItemPrice itemPrice = entry.itemPrice();
                 log.info("Itemprice: "+itemPrice.price());
                 //itemList.add(itemPrice.price());
+            int price = 0;
+            if(itemPrice.price()!=null){
+                price = itemPrice.price()/100;
+            }
             return itemPrice.price();
 
         } catch (Exception e) {

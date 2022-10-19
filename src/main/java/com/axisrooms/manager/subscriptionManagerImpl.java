@@ -39,6 +39,7 @@ public class subscriptionManagerImpl implements subscriptionManager{
                     .subscriptionItemBillingCycles(0,subItem.billing_cycles)
                     .subscriptionItemQuantity(0,subItem.quantity)
                     .autoCollection(AutoCollection.OFF)
+
 //                    .subscriptionItemItemPriceId(1,"day-pass-USD")
 //                    .subscriptionItemUnitPrice(1,100)
                     .request();
@@ -75,7 +76,7 @@ public class subscriptionManagerImpl implements subscriptionManager{
             //sub.setActivated_at(subscription.activatedAt());
             sub.setDue_invoices_count(subscription.dueInvoicesCount());
            // sub.setDue_since(subscription.dueSince());
-            sub.setTotal_dues(subscription.totalDues());
+           // sub.setTotal_dues(subscription.totalDues());
                     subscriptionList.add(sub);
             return subscriptionList;
         } catch (Exception e) {
