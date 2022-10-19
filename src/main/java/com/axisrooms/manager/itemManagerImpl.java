@@ -118,7 +118,7 @@ public class itemManagerImpl implements itemManager {
             if(itemPrice.price()!=null){
                 price = itemPrice.price()/100;
             }
-            return itemPrice.price();
+            return price;
 
         } catch (Exception e) {
             e.printStackTrace();
