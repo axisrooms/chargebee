@@ -21,6 +21,12 @@ import java.util.List;
 @Slf4j
 public class itemManagerImpl implements itemManager {
 
+    @Value("${microservice.communication.token}")
+    private String acceptedToken;
+
+    @Value("${siteName}")
+    private String siteName;
+
     @Value("${getItemsUrl}")
     private String getItemsUrl;
 
@@ -33,7 +39,7 @@ public class itemManagerImpl implements itemManager {
     public List<?> listItemFamily() {
         List<String> itemList = new ArrayList<>();
         try {
-            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            Environment.configure(siteName,acceptedToken);
             ListResult result = ItemFamily.list()
                     .limit(5)
                     .request();
@@ -54,7 +60,7 @@ public class itemManagerImpl implements itemManager {
         //ItemFamily itemFam = new ItemFamily(itemFamily);
 
         try {
-            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            Environment.configure(siteName,acceptedToken);
             ListResult result = Item.list()
                     .itemFamilyId().is(itemFamily)
                     .limit(99)
@@ -77,7 +83,7 @@ public class itemManagerImpl implements itemManager {
         List<String> itemList = new ArrayList<>();
         try {
            // String itemPLanId = itemPlan.replace(' ','-');
-            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            Environment.configure(siteName,acceptedToken);
             ListResult result = ItemPrice.list()
                     .itemId().is(itemPlan)
                     .limit(100)
@@ -101,7 +107,7 @@ public class itemManagerImpl implements itemManager {
         List<String> itemList = new ArrayList<>();
         try {
             // String itemPLanId = itemPlan.replace(' ','-');
-            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            Environment.configure(siteName,acceptedToken);
             Result result = ItemPrice.retrieve(itemPlanId).request();
             ItemPrice itemPrice = result.itemPrice();
 
@@ -118,7 +124,7 @@ public class itemManagerImpl implements itemManager {
     @Override
     public Response createItemPrice(ItemPriceModel subscriptionRequest) {
         try {
-            Environment.configure("axisrooms-test","test_WZcu6gTPcunkWwpkzWEbqO7Ei1AqIpe03k");
+            Environment.configure(siteName,acceptedToken);
             Result result = ItemPrice.create()
                     .id("silver-USD-monthly")
                     .itemId("silver")
