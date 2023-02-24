@@ -56,7 +56,9 @@ public class meteredBillImpl implements meteredBill{
                     .quantity(quantity.toString())
                     .request();
             Usage usageRes = result.usage();
+            log.info("Usage response : "+usageRes);
         } catch (Exception e) {
+            log.info(e.getMessage());
             throw new RuntimeException(e);
         }
         return null;

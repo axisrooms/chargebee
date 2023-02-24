@@ -77,7 +77,7 @@ public class subscriptionManagerImpl implements subscriptionManager{
             sub.setDue_invoices_count(subscription.dueInvoicesCount());
            // sub.setDue_since(subscription.dueSince());
            // sub.setTotal_dues(subscription.totalDues());
-                    subscriptionList.add(sub);
+                    subscriptionList.add(subscription);
             return subscriptionList;
         } catch (Exception e) {
             e.printStackTrace();
