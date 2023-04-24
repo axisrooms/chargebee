@@ -9,6 +9,7 @@ import com.chargebee.ListResult;
 import com.chargebee.Result;
 import com.chargebee.models.*;
 import com.chargebee.models.enums.AutoCollection;
+import com.google.gson.Gson;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -79,6 +80,36 @@ public class subscriptionManagerImpl implements subscriptionManager{
            // sub.setTotal_dues(subscription.totalDues());
                     subscriptionList.add(subscription);
             return subscriptionList;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public List<Subscription> getTransactionalSubscription(String customerId) {
+        List subscriptionList = new ArrayList();
+        try {
+
+                Environment.configure(siteName,acceptedToken);
+                ListResult result = Subscription.list()
+                        .customerId().is(customerId)
+                        .limit(99)
+                        .request();
+                for(ListResult.Entry entry:result) {
+                    Subscription subscription = entry.subscription();
+                    Gson gson = new Gson();
+                    String subsc = gson.toJson(subscription);
+                    if (subsc.contains("metered")) {
+                        log.info("Subsc: " + subscription.id());
+                        subscriptionList.add(subscription.id());
+                    }
+
+                }
+
+            return subscriptionList;
+
+
         } catch (Exception e) {
             e.printStackTrace();
         }

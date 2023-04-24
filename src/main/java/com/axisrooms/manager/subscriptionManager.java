@@ -16,4 +16,6 @@ public interface subscriptionManager {
     public List<Subscription> getSubscription(String subscriptionId);
 
     public List<Subscription> listSubscriptions(String customerId) throws Exception;
+
+    public List<Subscription> getTransactionalSubscription(String customerId);
 }

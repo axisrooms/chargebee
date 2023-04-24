@@ -39,7 +39,8 @@ public class meteredBillImpl implements meteredBill{
         try {
             String itemPriceId = "";
             Integer quantity = Math.toIntExact(Math.round(usage));
-            List<Subscription> subscriptionList = subscriptionManager.listSubscriptions(customerId);
+           // List<Subscription> subscriptionList = subscriptionManager.listSubscriptions(customerId);
+            List<Subscription> subscriptionList = subscriptionManager.getTransactionalSubscription(customerId);
             String subId="";
             if(!subscriptionList.isEmpty()){
                 Subscription subscription = (subscriptionManager.getSubscription(String.valueOf(subscriptionList.get(0)))).get(0);
